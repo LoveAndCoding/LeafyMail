@@ -1,8 +1,10 @@
 {
-	"name": "nw-demo",
+	"name": "LeafyMail",
 	"version": "0.0.1",
 	"main": "index.html",
 	"window" : {
+		"title": "LeafyMail",
+		"icon": "icon.png",
 		"frame": false,
 		"show": false,
 		"toolbar":false,

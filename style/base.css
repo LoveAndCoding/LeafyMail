@@ -114,7 +114,7 @@ body {
 }
 
 #topbar {
-	height: 40px;
+	height: 30px;
 	background-color: #4F4F4F;
 	text-align: right;
 	-webkit-app-region: drag;
@@ -125,10 +125,10 @@ body {
 #window-title {
 	flex: 1;
 	text-align: left;
-	padding: 5px 15px;
-	height: 35px;
-	line-height: 30px;
-	font-size: 22px;
+	padding: 2px 15px 0px;
+	height: 25px;
+	line-height: 25px;
+	font-size: 18px;
 	font-weight: 100;
 	color: #CCCCCC;
 	box-sizing: border-box;
@@ -136,13 +136,19 @@ body {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
+#logo {
+	display: inline-block;
+	vertical-align: text-top;
+	height: 18px;
+	padding: 3px;
+}
 #topbar button {
 	font-family: inherit;
 	font-size: 12px;
 	font-weight: 800;
-	line-height: 40px;
-	height: 40px;
-	width: 45px;
+	line-height: 30px;
+	height: 30px;
+	width: 40px;
 	text-align: center;
 	background-color: transparent;
 	border: none;
