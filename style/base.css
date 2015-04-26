@@ -102,13 +102,14 @@ table {
 		url(../fonts/SourceSansPro-ExtraLight.ttf);
 }
 
-html, body {
+html {
 	position: relative;
 	height: 100%;
 	background-color: #FAFAFA;
 }
 body {
 	font-family: "Source Sans Pro", sans-serif;
+	min-height: 100%;
 	display: flex;
 	flex-direction: column;
 }
@@ -183,6 +184,7 @@ button#close:hover, button#close:active, button#close:focus {
 	background-color: #333333;
 	padding: 15px 0px;
 	min-width: 250px;
+	overflow: auto;
 }
 #primary-nav a {
 	display: block;
@@ -210,17 +212,35 @@ button#close:hover, button#close:active, button#close:focus {
 	flex: 5;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 980px) {
 	#primary-nav {
-		min-width: 65px;
+		min-width: 55px;
+		overflow: visible;
 	}
 	#primary-nav a {
-		font-size: 0px;
+		white-space: nowrap;
+	}
+	#primary-nav a .label{
+		display: none;
+		padding: 15px;
+		margin: -15px 0px;
+	}
+	#primary-nav a:hover .label {
+		display: inline-block;
+		min-width: 180px;
+		width: 220%;
+		background-color: inherit;
+	}
+	#primary-nav a.current:hover .label {
+		display: none;
 	}
 	#primary-nav a i {
 		font-size: 18px;
 		float: none;
 		margin: 0px;
+		vertical-align: middle;
+		width: 100%;
+		box-sizing: border-box;
 	}
 	#primary-pane {
 		flex: 6;
