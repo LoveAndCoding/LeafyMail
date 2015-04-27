@@ -4,7 +4,8 @@
 		<title>Leafy Mail</title>
 		<script src="lib/winstate.js"></script>
 		<script src="src/app.js"></script>
-		<link rel="stylesheet" href="style/base.css">
+		<link rel="stylesheet/less" href="style/base.css" type="text/css">
+		<script src="lib/less.min.js"></script>
 	</head>
 	<body>
 		<div id="topbar">
@@ -15,6 +16,7 @@
 			<button id="maximize"><i class="fa fa-square-o"></i></button>
 			<button id="close"><i class="fa fa-remove"></i></button>
 		</div>
+		<div class="loading-pane"><i class="fa fa-circle-o-notch fa-spin"></i><span>Loading</span></div>
 		<div id="primary">
 			<nav id="primary-nav">
 				<a href="#" class="current"><i class="fa fa-inbox"></i><span class="label">Inbox</span></a>

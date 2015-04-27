@@ -1,8 +1,19 @@
+@red-highlight: #FF9999;
+@deep-red-highlight: #AA0000;
+@highlight: #6699AA;
+@deep-highlight: #4F99EE;
+@dark-bg: #4F4F4F;
+@dark-bg-font: #FFFFFF;
+@dark-bg-font-faded: #CCCCCC;
+@light-bg: #FAFAFA;
+@light-bg-font: #333333;
+@light-bg-font-faded: #4F4F4F;
+
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
 */
-
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -105,7 +116,7 @@ table {
 html {
 	position: relative;
 	height: 100%;
-	background-color: #FAFAFA;
+	background-color: @light-bg;
 }
 body {
 	font-family: "Source Sans Pro", sans-serif;
@@ -116,7 +127,7 @@ body {
 
 #topbar {
 	height: 30px;
-	background-color: #4F4F4F;
+	background-color: @dark-bg;
 	text-align: right;
 	-webkit-app-region: drag;
 	display: -webkit-flex;
@@ -131,7 +142,7 @@ body {
 	line-height: 25px;
 	font-size: 18px;
 	font-weight: 100;
-	color: #CCCCCC;
+	color: @dark-bg-font-faded;
 	box-sizing: border-box;
 	overflow: hidden;
 	white-space: nowrap;
@@ -153,23 +164,50 @@ body {
 	text-align: center;
 	background-color: transparent;
 	border: none;
-	color: #FFFFFF;
+	color: @dark-bg-font;
 	display: inline-block;
 	box-sizing: border-box;
 	vertical-align: bottom;
 	-webkit-app-region: no-drag;
 }
 #topbar button:hover, #topbar button:active, #topbar button:focus {
-	background-color: #6699AA;
+	background-color: @highlight;
 	outline: none;
 }
 button#close {
-	color: #FF9999;
+	color: @red-highlight;
 }
 button#close:hover, button#close:active, button#close:focus {
-	background-color: #AA0000;
-	color: #FFFFFF;
+	background-color: @deep-red-highlight;
+	color: @dark-bg-font;
 	outline: none;
+}
+
+.loading-pane {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	font-size: 32px;
+	color: @dark-bg-font-faded;
+	
+	i.fa {
+		width: 50px;
+		height: 48px;
+		display: block;
+		line-height: 48px;
+		text-align: center;
+		color: @highlight;
+	}
+	
+	span {
+		display: block;
+	}
+	
+	+ #primary {
+		display: none;
+	}
 }
 
 /*
@@ -181,32 +219,36 @@ button#close:hover, button#close:active, button#close:focus {
 }
 #primary-nav {
 	flex: 1;
-	background-color: #333333;
+	background-color: @dark-bg - #222;
 	padding: 15px 0px;
 	min-width: 250px;
 	overflow: auto;
-}
-#primary-nav a {
-	display: block;
-	color: #FFFFFF;
-	text-align: center;
-	text-decoration: none;
-	padding: 15px;
-	font-size: 18px;
-	line-height: 22px;
-}
-#primary-nav a:hover, #primary-nav a:active, #primary-nav a:focus {
-	background-color: #6699AA;
-}
-#primary-nav a.current {
-	background-color: #4F99CC;
-	background-color: #FAFAFA;
-	color: #4999CC;
-}
-#primary-nav a i {
-	float: left;
-	margin-left: 10px;
-	margin-right: -25px;
+	
+	a {
+		display: block;
+		color: @dark-bg-font;
+		text-align: center;
+		text-decoration: none;
+		padding: 15px;
+		font-size: 18px;
+		line-height: 22px;
+		transition: background-color 0.15s, color 0.15s;
+		
+		&:hover, &:active, &:focus {
+			background-color: @highlight;
+		}
+		
+		&.current {
+			background-color: @light-bg;
+			color: @deep-highlight;
+		}
+		
+		i {
+			float: left;
+			margin-left: 10px;
+			margin-right: -25px;
+		}
+	}
 }
 #primary-pane {
 	flex: 5;
@@ -216,31 +258,36 @@ button#close:hover, button#close:active, button#close:focus {
 	#primary-nav {
 		min-width: 55px;
 		overflow: visible;
-	}
-	#primary-nav a {
-		white-space: nowrap;
-	}
-	#primary-nav a .label{
-		display: none;
-		padding: 15px;
-		margin: -15px 0px;
-	}
-	#primary-nav a:hover .label {
-		display: inline-block;
-		min-width: 180px;
-		width: 220%;
-		background-color: inherit;
-	}
-	#primary-nav a.current:hover .label {
-		display: none;
-	}
-	#primary-nav a i {
-		font-size: 18px;
-		float: none;
-		margin: 0px;
-		vertical-align: middle;
-		width: 100%;
-		box-sizing: border-box;
+		
+		a {
+			white-space: nowrap;
+			
+			.label{
+				display: none;
+				padding: 15px;
+				margin: -15px 0px -15px 15px;
+			}
+			
+			&:hover .label {
+				display: inline-block;
+				min-width: 180px;
+				width: 220%;
+				background-color: inherit;
+			}
+			
+			&.current:hover .label {
+				display: none;
+			}
+			
+			i {
+				font-size: 18px;
+				float: none;
+				margin: 0px;
+				vertical-align: middle;
+				width: 100%;
+				box-sizing: border-box;
+			}
+		}
 	}
 	#primary-pane {
 		flex: 6;
