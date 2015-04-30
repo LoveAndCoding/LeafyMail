@@ -235,22 +235,27 @@ button#close:hover, button#close:active, button#close:focus {
 .welcome-page {
 	flex: 1;
 	text-align: center;
+	padding-bottom: 45px;
 	
 	h1 {
-		font-size: 72px;
-		font-weight: 700;
+		font-size: 112px;
+		font-weight: 100;
 		padding: 10px;
 		
 		img {
 			display: block;
-			max-height: 25vh;
+			max-height: 40vh;
 			max-width: 40vw;
 			margin: 0px auto;
 		}
+		
+		@media (max-width: 460px) {
+			font-size: 48px;
+		}
 	}
 	p {
-		font-weight: 300;
-		font-size: 18px;
+		font-weight: 800;
+		font-size: 22px;
 		padding-bottom: 10px;
 		color: @light-bg-font-faded;
 	}
