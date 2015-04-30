@@ -1,6 +1,7 @@
 @red-highlight: #FF9999;
 @deep-red-highlight: #AA0000;
 @highlight: #6699AA;
+@highlight-font: #FFFFFF;
 @deep-highlight: #4F99EE;
 @dark-bg: #4F4F4F;
 @dark-bg-font: #FFFFFF;
@@ -125,6 +126,24 @@ body {
 	flex-direction: column;
 }
 
+.flex-pane-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.btn {
+	background-color: @dark-bg;
+	color: @dark-bg-font;
+	border: none;
+	padding: 10px;
+	
+	+:hover, +:active, +:focus {
+		background-color: @highlight;
+		color: @highlight-font;
+	}
+}
+
 #topbar {
 	height: 30px;
 	background-color: @dark-bg;
@@ -209,6 +228,52 @@ button#close:hover, button#close:active, button#close:focus {
 		display: none;
 	}
 }
+
+/*
+	Welcome Page
+*/
+.welcome-page {
+	flex: 1;
+	text-align: center;
+	
+	h1 {
+		font-size: 72px;
+		font-weight: 700;
+		padding: 10px;
+		
+		img {
+			display: block;
+			max-height: 25vh;
+			max-width: 40vw;
+			margin: 0px auto;
+		}
+	}
+	p {
+		font-weight: 300;
+		font-size: 18px;
+		padding-bottom: 10px;
+		color: @light-bg-font-faded;
+	}
+	form {
+		text-align: right;
+		
+		input {
+			font-family: inherit;
+		}
+		input[type=email], input[type=password] {
+			display: block;
+			padding: 10px;
+			margin: 10px 0px;
+			font-size: 24px;
+			width: 300px;
+		}
+		.btn {
+			font-size: 18px;
+			width: 100px;
+		}
+	}
+}
+
 
 /*
 	Primary
