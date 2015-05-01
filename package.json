@@ -1,12 +1,12 @@
 {
-	"name": "LeafyMail",
+	"name": "leafymail",
 	"version": "0.0.1",
 	"main": "index.html",
 	"window" : {
 		"title": "LeafyMail",
 		"icon": "icon.png",
 		"frame": false,
-		"show": false,
+		"show": true,
 		"toolbar":false,
 		"width":800,
 		"height":600

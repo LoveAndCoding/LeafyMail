@@ -1,10 +1,57 @@
 var gui = require('nw.gui'),
 	win = gui.Window.get();
 
-// win.showDevTools();
+win.showDevTools();
 
-$.getScript('src/appbar.js');
-$.getScript('src/accounts.js');
+requirejs.config({
+	nodeRequire: require,
+	baseUrl: 'src',
+	shim: {
+		underscore: {
+			exports: '_'
+		},
+		backbone: {
+			deps: [
+				'underscore',
+				'jquery'
+			],
+			exports: 'Backbone'
+		},
+		backboneLocalstorage: {
+			deps: ['backbone'],
+			exports: 'Store'
+		},
+		winstate: {
+			exports: 'WindowState'
+		}
+	},
+	paths: {
+		winstate: '../lib/winstate',
+		jquery: '../node_modules/jquery/dist/jquery',
+		underscore: '../node_modules/underscore/underscore',
+		backbone: '../node_modules/backbone/backbone',
+		backboneLocalstorage: '../node_modules/backbone.localstorage/backbone.localStorage',
+		text: '../node_modules/requirejs-text/text'
+	}
+});
+
+win.show();
+
+requirejs([
+	'jquery',
+	'backbone',
+	'app.view'
+], function ($, Backbone, AppView) {
+	var app = new AppView();
+	app.render();
+	
+	app.setDeveloperMode();
+	
+	$('body > .loading-pane').remove();
+});
+
+// $.getScript('src/appbar.js');
+// $.getScript('src/accounts.js');
 
 // $('body > .loading-pane').remove();
 
