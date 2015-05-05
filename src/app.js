@@ -1,7 +1,7 @@
 var gui = require('nw.gui'),
 	win = gui.Window.get();
 
-win.showDevTools();
+// win.showDevTools();
 
 requirejs.config({
 	nodeRequire: require,
@@ -40,9 +40,12 @@ win.show();
 requirejs([
 	'jquery',
 	'backbone',
+	'app.model',
 	'app.view'
-], function ($, Backbone, AppView) {
-	var app = new AppView();
+], function ($, Backbone, AppModel, AppView) {
+	var app = new AppView({
+		model : new AppModel()
+	});
 	app.render();
 	
 	app.setDeveloperMode();
