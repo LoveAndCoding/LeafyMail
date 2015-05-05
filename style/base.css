@@ -264,17 +264,28 @@ button#close:hover, button#close:active, button#close:focus {
 		
 		input {
 			font-family: inherit;
-		}
-		input[type=email], input[type=password] {
-			display: block;
-			padding: 10px;
-			margin: 10px 0px;
-			font-size: 24px;
-			width: 300px;
+			
+			&[type=email], &[type=password] {
+				display: block;
+				padding: 10px;
+				margin: 10px 0px;
+				font-size: 24px;
+				width: 300px;
+			}
 		}
 		.btn {
 			font-size: 18px;
-			width: 100px;
+			width: 180px;
+			cursor: pointer;
+		}
+		.status-message {
+			text-align: center;
+			padding: 15px;
+			min-height: 24px;
+			
+			.fa {
+				padding: 0px 10px;
+			}
 		}
 	}
 }
