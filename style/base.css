@@ -138,7 +138,7 @@ body {
 	border: none;
 	padding: 10px;
 	
-	+:hover, +:active, +:focus {
+	&:hover, &:active, &:focus {
 		background-color: @highlight;
 		color: @highlight-font;
 	}
@@ -244,13 +244,11 @@ button#close:hover, button#close:active, button#close:focus {
 		
 		img {
 			display: block;
-			max-height: 40vh;
-			max-width: 40vw;
-			margin: 0px auto;
+			max-height: 20vh;
 		}
 		
 		@media (max-width: 460px) {
-			font-size: 48px;
+			font-size: 24vw;
 		}
 	}
 	p {
