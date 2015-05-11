@@ -1,12 +1,13 @@
 define([
-	'backbone'
-], function (Backbone) {
+	'backbone',
+	'accounts/account.collection'
+], function (Backbone, AccountCollection) {
 	
 	var AppModel = Backbone.Model.extend({
 		
 		defaults: {
 			layout: 'leafy',
-			accounts: []
+			accounts: new AccountCollection()
 		}
 		
 	});
