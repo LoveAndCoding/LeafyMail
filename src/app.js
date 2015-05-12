@@ -21,6 +21,10 @@ requirejs.config({
 			deps: ['backbone'],
 			exports: 'Store'
 		},
+		marionette: {
+			deps: ['backboneLocalstorage'],
+			exports: 'Store'
+		},
 		winstate: {
 			exports: 'WindowState'
 		}
@@ -31,6 +35,7 @@ requirejs.config({
 		underscore: '../node_modules/underscore/underscore',
 		backbone: '../node_modules/backbone/backbone',
 		backboneLocalstorage: '../node_modules/backbone.localstorage/backbone.localStorage',
+		marionette: '../node_modules/backbone.marionette/lib/backbone.marionette',
 		text: '../node_modules/requirejs-text/text'
 	}
 });
@@ -39,16 +44,20 @@ win.show();
 
 requirejs([
 	'jquery',
-	'backbone',
+	'marionette',
 	'app.model',
 	'app.view'
-], function ($, Backbone, AppModel, AppView) {
-	var app = new AppView({
-		model : new AppModel()
-	});
-	app.render();
+], function ($, Marionette, AppModel, AppView) {
 	
-	app.setDeveloperMode();
+	var app = new Marionette.Application();
+	
+	app.rootModel = new AppModel();
+	app.rootView = new AppView({
+		model : app.rootModel
+	});
+	
+	app.rootView.setDeveloperMode();
+	// app.render();
 	
 	$('body > .loading-pane').remove();
 });

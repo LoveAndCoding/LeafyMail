@@ -144,7 +144,7 @@ body {
 	}
 }
 
-#topbar {
+#appbar {
 	height: 30px;
 	background-color: @dark-bg;
 	text-align: right;
@@ -152,6 +152,38 @@ body {
 	display: -webkit-flex;
 	flex-direction: row;
 	justify-content: flex-end;
+	
+	button {
+		font-family: inherit;
+		font-size: 12px;
+		font-weight: 800;
+		line-height: 30px;
+		height: 30px;
+		width: 40px;
+		text-align: center;
+		background-color: transparent;
+		border: none;
+		color: @dark-bg-font;
+		display: inline-block;
+		box-sizing: border-box;
+		vertical-align: bottom;
+		-webkit-app-region: no-drag;
+		
+		&:hover, &:active, &:focus {
+			background-color: @highlight;
+			outline: none;
+		}
+		
+		#close {
+			color: @red-highlight;
+			
+			&:hover, &:active, &:focus {
+				background-color: @deep-red-highlight;
+				color: @dark-bg-font;
+				outline: none;
+			}
+		}
+	}
 }
 #window-title {
 	flex: 1;
@@ -172,34 +204,6 @@ body {
 	vertical-align: text-top;
 	height: 18px;
 	padding: 3px;
-}
-#topbar button {
-	font-family: inherit;
-	font-size: 12px;
-	font-weight: 800;
-	line-height: 30px;
-	height: 30px;
-	width: 40px;
-	text-align: center;
-	background-color: transparent;
-	border: none;
-	color: @dark-bg-font;
-	display: inline-block;
-	box-sizing: border-box;
-	vertical-align: bottom;
-	-webkit-app-region: no-drag;
-}
-#topbar button:hover, #topbar button:active, #topbar button:focus {
-	background-color: @highlight;
-	outline: none;
-}
-button#close {
-	color: @red-highlight;
-}
-button#close:hover, button#close:active, button#close:focus {
-	background-color: @deep-red-highlight;
-	color: @dark-bg-font;
-	outline: none;
 }
 
 .loading-pane {

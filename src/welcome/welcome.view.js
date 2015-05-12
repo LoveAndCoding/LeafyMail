@@ -2,11 +2,12 @@ define([
 	'underscore',
 	'jquery',
 	'backbone',
+	'marionette',
 	'text!../../templates/welcome.html'
-], function (_, $, Backbone, WelcomeTemplate) {
+], function (_, $, Backbone, Marionette, WelcomeTemplate) {
 	'use strict';
 	
-	var WelcomeView = Backbone.View.extend({
+	var WelcomeView = Marionette.CompositeView.extend({
 		
 		template: _.template(WelcomeTemplate),
 		className: 'welcome-page',
@@ -20,7 +21,7 @@ define([
 		
 		render: function () {
 			this.$el.html('');
-			this.$el.append(this.template(this.model.toJSON()));
+			this.$el.append(this.template(this.model.toJSON())).addClass('flex-pane-center');
 			return this;
 		},
 		

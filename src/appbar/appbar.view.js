@@ -8,7 +8,7 @@ define([
 	
 	var AppBarView = Backbone.View.extend({
 		
-		id: 'topbar',
+		id: 'appbar',
 		template: _.template(AppBarTemplate),
 		
 		initialize: function () {

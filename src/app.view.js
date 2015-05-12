@@ -1,41 +1,35 @@
 define([
 	'jquery',
 	'backbone',
+	'marionette',
 	'appbar/appbar.model',
 	'appbar/appbar.view',
 	'welcome/welcome.view'
-], function ($, Backbone, AppBarModel, AppBarView, WelcomeView) {
+], function ($, Backbone, Marionette, AppBarModel, AppBarView, WelcomeView) {
 	'use strict';
 	
-	var AppView = Backbone.View.extend({
+	var AppView = Marionette.LayoutView.extend({
 		el: 'body',
 		
+		regions: {
+			appbar : '#top',
+			main : '#primary'
 		initialize: function () {
-			this.appbar = new AppBarView({ model: new AppBarModel() });
-			this.views = [];
+			this.showChildView('appbar', new AppBarView({ model: new AppBarModel() }) );
 			
 			if(this.model.get('accounts').length === 0) {
-				var welcome = new WelcomeView({model : this.model});
-				welcome.$el.addClass('flex-pane-center');
-				this.views.push(welcome);
+				this.showChildView('main', new WelcomeView({model : this.model}) );
 			}
 		},
 		
 		render: function () {
-			this.$el.html('');
-			this.appbar.render();
-			this.$el.append(this.appbar.$el);
 			
-			for(var v = 0, l = this.views.length; v < l; v++) {
-				this.views[v].render();
-				this.$el.append(this.views[v].$el);
-			}
 			
 			return this;
 		},
 		
 		setDeveloperMode: function () {
-			this.appbar.model.set('isDebug', true);
+			this.appbar.currentView.model.set('isDebug', true);
 			return this;
 		}
 	});
