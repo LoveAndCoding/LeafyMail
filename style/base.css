@@ -249,6 +249,7 @@ body {
 		img {
 			display: block;
 			max-height: 20vh;
+			max-width: 100%;
 		}
 		
 		@media (max-width: 460px) {
@@ -262,7 +263,7 @@ body {
 		color: @light-bg-font-faded;
 	}
 	form {
-		text-align: right;
+		text-align: center;
 		
 		input {
 			font-family: inherit;
@@ -270,7 +271,7 @@ body {
 			&[type=email], &[type=password] {
 				display: block;
 				padding: 10px;
-				margin: 10px 0px;
+				margin: 10px auto;
 				font-size: 24px;
 				width: 300px;
 			}
@@ -279,6 +280,12 @@ body {
 			font-size: 18px;
 			width: 180px;
 			cursor: pointer;
+			margin-left: 146px;
+			
+			&:disabled {
+				background-color: #BFBFBF;
+				cursor: default;
+			}
 		}
 		.status-message {
 			text-align: center;

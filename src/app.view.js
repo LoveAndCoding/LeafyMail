@@ -15,6 +15,8 @@ define([
 			appbar : '#top',
 			main : '#primary'
 		initialize: function () {
+			this.radio = Backbone.Wreqr.radio.channel('global');
+			
 			this.showChildView('appbar', new AppBarView({ model: new AppBarModel() }) );
 			
 			if(this.model.get('accounts').length === 0) {
