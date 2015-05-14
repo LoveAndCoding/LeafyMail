@@ -31,7 +31,7 @@ define([
 			
 			this.$el.find('input').attr('disabled', true);
 			
-			this.$el.find('.status-message').append($('<i>').addClass('fa fa-circle-o-notch fa-spin'), 'Searching for server');
+			this.$el.find('.status-message').text('').append($('<i>').addClass('fa fa-circle-o-notch fa-spin'), 'Searching for server');
 			var self = this,
 				r = this.radio.reqres.request('account:add', {
 					email : this.$el.find('input[type=email]').val(),
@@ -40,6 +40,7 @@ define([
 			
 			r.then(function () {
 				// TODO Account added, remove welcome
+				self.radio.commands.execute('welcome:complete');
 			}, function (message) {
 				self.$el.find('input').attr('disabled', false);
 				self.$el.find('.status-message').text(message);
