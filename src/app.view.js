@@ -19,15 +19,28 @@ define([
 			
 			this.showChildView('appbar', new AppBarView({ model: new AppBarModel() }) );
 			
-			if(this.model.get('accounts').length === 0) {
-				this.showChildView('main', new WelcomeView({model : this.model}) );
-			}
+			this.renderMainView();
 		},
 		
 		render: function () {
 			
 			
 			return this;
+		},
+		
+		renderMainView: function () {
+			var self = this;
+			if(this.main && this.main.currentView)
+				this.getRegion('main').reset();
+			
+			if(this.model.get('accounts').length === 0) {
+				this.radio.commands.setHandler('welcome:complete', function () {
+					self.renderMainView();
+				});
+				this.showChildView('main', new WelcomeView({model : this.model}) );
+			} else {
+				// TODO
+			}
 		},
 		
 		setDeveloperMode: function () {
