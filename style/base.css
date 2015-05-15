@@ -326,6 +326,59 @@ body {
 	}
 }
 
+.password-prompt {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	
+	.form-container {
+		background-color: @dark-bg;
+		color: @dark-bg-font;
+		padding-bottom: 15px;
+	}
+	
+	p {
+		-webkit-app-region: drag;
+		text-align: center;
+		padding: 5px;
+		font-weight: 600;
+		line-height: 18px;
+		
+		.address {
+			font-weight: 100;
+			display: block;
+			line-height: 18px;
+			font-size: 14px;
+		}
+	}
+	input[type=password] {
+		display: block;
+		width: 250px;
+		margin: 5px auto;
+		padding: 10px;
+		background-color: #FFFFFF;
+		border: none;
+	}
+	.button-group {
+		display: flex;
+		justify-content: flex-end;
+		
+		.btn {
+			display: block;
+			font-size: 18px;
+			line-height: 22px;
+			
+			&.cancel {
+				width: 50px;
+			}
+			&.primary {
+				width: 95px;
+			}
+		}
+	}
+	
+}
 
 /*
 	Primary
