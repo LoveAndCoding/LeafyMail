@@ -9,6 +9,10 @@
 @light-bg: #FAFAFA;
 @light-bg-font: #333333;
 @light-bg-font-faded: #4F4F4F;
+@button-primary: @deep-highlight;
+@button-primary-text: #FFFFFF;
+@button-cancel: #D05F50;
+@button-cancel-text: #EFEFEF;
 
 
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -117,7 +121,6 @@ table {
 html {
 	position: relative;
 	height: 100%;
-	background-color: @light-bg;
 }
 body {
 	font-family: "Source Sans Pro", sans-serif;
@@ -137,15 +140,40 @@ body {
 	color: @dark-bg-font;
 	border: none;
 	padding: 10px;
+	cursor: pointer;
 	
 	&:hover, &:active, &:focus {
 		background-color: @highlight;
 		color: @highlight-font;
 	}
+	
+	&.primary {
+		background-color: @button-primary;
+		color: @button-primary-text;
+		&:hover, &:active, &:focus {
+			background-color: darken(@button-primary, 20%);
+			color: lighten(@button-primary-text, 20%);
+		}
+	}
+	
+	&.cancel {
+		background-color: @button-cancel;
+		color: @button-cancel-text;
+		&:hover, &:active, &:focus {
+			background-color: darken(@button-cancel, 20%);
+			color: lighten(@button-cancel-text, 20%);
+		}
+	}
+}
+
+#main-window {
+	background-color: @light-bg;
+}
+.modal-window {
 }
 
 #appbar {
-	height: 30px;
+	min-height: 20px;
 	background-color: @dark-bg;
 	text-align: right;
 	-webkit-app-region: drag;
@@ -279,7 +307,6 @@ body {
 		.btn {
 			font-size: 18px;
 			width: 180px;
-			cursor: pointer;
 			margin-left: 146px;
 			
 			&:disabled {

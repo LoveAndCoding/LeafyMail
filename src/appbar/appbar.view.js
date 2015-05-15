@@ -2,9 +2,10 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
+	'marionette',
 	'winstate',
 	'text!../../templates/appbar.html'
-], function ($, _, Backbone, WindowState, AppBarTemplate) {
+], function ($, _, Backbone, Marionette, WindowState, AppBarTemplate) {
 	
 	var AppBarView = Backbone.View.extend({
 		
@@ -47,6 +48,7 @@ define([
 		
 		refresh: function () {
 			WindowState.save();
+			Backbone.Wreqr.radio.channel('global').vent.trigger('application:reload', {source:'appbar'});
 			window.location.reload();
 		},
 		

@@ -15,11 +15,25 @@ define([
 			appbar : '#top',
 			main : '#primary'
 		initialize: function () {
+			var self = this;
+			
+			this.stack = this.model.get('modalStack');
 			this.radio = Backbone.Wreqr.radio.channel('global');
 			
 			this.showChildView('appbar', new AppBarView({ model: new AppBarModel() }) );
 			
 			this.renderMainView();
+			
+			win.on('focus', function () {
+				win.blur();
+				if(self.stack && self.stack.length > 0) {
+					self.stack.at(self.stack.length - 1).focus();
+				}
+				return false;
+			});
+			
+			this.radio.vent.on('application:reload', this.forceCloseModals.bind(this));
+			win.on('close', this.forceCloseModals.bind(this));
 		},
 		
 		render: function () {
@@ -46,6 +60,12 @@ define([
 		setDeveloperMode: function () {
 			this.appbar.currentView.model.set('isDebug', true);
 			return this;
+		},
+		
+		forceCloseModals: function () {
+			while(this.stack.length) {
+				this.stack.pop().forceClose();
+			}
 		}
 	});
 	
