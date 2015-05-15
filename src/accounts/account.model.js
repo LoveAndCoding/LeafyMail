@@ -47,8 +47,6 @@ define([
 			// Don't store the password
 			delete opts.password;
 			
-			console.log('Creating New Account', opts, domain);
-			
 			return Backbone.Model.apply(this, arguments);
 		},
 		

@@ -48,6 +48,18 @@ requirejs([
 	'app.model',
 	'app.view'
 ], function ($, Marionette, AppModel, AppView) {
+		
+	/** Overriding default HTML attachment for regions because it is silly **/
+	Marionette.Region.prototype.__attachHtml = Marionette.Region.prototype.attachHtml;
+	Marionette.Region.prototype.attachHtml = function (view) {
+		var el = this.$el;
+		
+		this.el = view.el;
+		this.$el = view.$el;
+		
+		el.replaceWith(view.$el);
+		return this;
+	};
 	
 	var app = new Marionette.Application();
 	

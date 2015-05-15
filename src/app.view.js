@@ -4,8 +4,9 @@ define([
 	'marionette',
 	'appbar/appbar.model',
 	'appbar/appbar.view',
-	'welcome/welcome.view'
-], function ($, Backbone, Marionette, AppBarModel, AppBarView, WelcomeView) {
+	'welcome/welcome.view',
+	'app.primary.view'
+], function ($, Backbone, Marionette, AppBarModel, AppBarView, WelcomeView, AppPrimaryView) {
 	'use strict';
 	
 	var AppView = Marionette.LayoutView.extend({
@@ -54,6 +55,10 @@ define([
 				this.showChildView('main', new WelcomeView({model : this.model}) );
 			} else {
 				// TODO
+				this.showChildView('main', new AppPrimaryView({
+					model : this.model,
+					collection: this.model.get('mailboxes')}
+				));
 			}
 		},
 		
