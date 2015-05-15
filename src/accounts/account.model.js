@@ -68,7 +68,7 @@ define([
 		},
 		
 		then: function () {
-			this.connection.then.apply(this.connection, arguments);
+			return this.connection.then.apply(this.connection, arguments);
 		},
 		
 		ready: function (connection) {
