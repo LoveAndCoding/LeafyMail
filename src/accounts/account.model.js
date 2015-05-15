@@ -8,8 +8,10 @@ var IMAP = require('imap'),
 define([
 	'underscore',
 	'backbone',
-	'accounts/knownservers'
-], function (_, Backbone, KnownServers) {
+	'accounts/knownservers',
+	'accounts/passwordprompt.view',
+	'text!../../templates/passwordprompt.html'
+], function (_, Backbone, KnownServers, PasswordPromptView, PasswordPromptTemplate) {
 	
 	var AccountModel = Backbone.Model.extend({
 		
@@ -21,6 +23,8 @@ define([
 			var email = opts.email,
 				pass = opts.password,
 				domain = email.substr(email.lastIndexOf('@') + 1);
+			
+			this.radio = Backbone.Wreqr.radio.channel('global');
 			
 			if(opts.host) {
 				// We have settings
@@ -48,18 +52,40 @@ define([
 			return Backbone.Model.apply(this, arguments);
 		},
 		
+		getUserPassword: function (options) {
+			return this.radio.reqres.request('modal:new', {
+				template: PasswordPromptTemplate,
+				view: new PasswordPromptView,
+				model: options,
+				window: {
+					width: 300,
+					height: 150
+				}
+			});
+		},
+		
 		connect: function (opts) {
 			var connOpts = _.clone(opts),
-				self = this;
+				self = this,
+				passprom;
 			_.extend(connOpts, IMAP_DEFAULTS);
 			
-			this.connection = new Promise(function (resolve, reject) {
-				self._imap = new IMAP(connOpts);
-				
-				self._imap.on('error', reject.bind(this));
-				self._imap.on('ready', resolve.bind(this, self._imap));
-				
-				self._imap.connect();
+			if(connOpts.password) {
+				passprom = Promise.resolve(connOpts.password);
+			} else {
+				passprom = this.getUserPassword(connOpts);
+			}
+			
+			this.connection = passprom.then(function (password) {
+				connOpts.password = password;
+				return new Promise(function (resolve, reject) {
+					self._imap = new IMAP(connOpts);
+					
+					self._imap.on('error', reject.bind(this));
+					self._imap.on('ready', resolve.bind(this, self._imap));
+					
+					self._imap.connect();
+				});
 			});
 			
 			this.connection.then(this.ready.bind(this), this.error.bind(this));
