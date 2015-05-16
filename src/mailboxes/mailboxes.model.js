@@ -5,8 +5,9 @@ define([
 	var MailboxModel = Backbone.Model.extend({
 		
 		defaults: {
+			alias: '',
 			name: '',
-			iconClass: 'fa-folder-open-o',
+			iconClass: 'fa-folder-o',
 			attributes: [],
 			flags: [],
 			unread: 0,

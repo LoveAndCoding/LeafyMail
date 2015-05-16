@@ -22,7 +22,7 @@ define([
 				return added;
 			});
 			
-			this.on('change', this.sync.bind(this));
+			// this.on('change', this.sync.bind(this));
 		}
 		
 	});

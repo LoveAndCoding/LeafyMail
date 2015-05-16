@@ -16,7 +16,7 @@ define([
 	var AccountModel = Backbone.Model.extend({
 		
 		defaults: {
-			
+			connected: false
 		},
 		
 		constructor: function (opts) {
@@ -42,12 +42,17 @@ define([
 				opts.user = opts.user.join('@');
 			}
 			
+			opts.connected = false;
 			this.connect(opts);
 			
 			// Don't store the password
 			delete opts.password;
 			
 			return Backbone.Model.apply(this, arguments);
+		},
+		
+		destroy: function () {
+			this.disconnect();
 		},
 		
 		getUserPassword: function (options) {
@@ -91,12 +96,33 @@ define([
 			return this;
 		},
 		
+		disconnect: function () {
+			if(this._imap && this._imap.state !== 'disconnected') {
+				this._imap.end();
+			}
+		},
+		
 		then: function () {
 			return this.connection.then.apply(this.connection, arguments);
 		},
 		
+		getBoxes: function () {
+			var self = this;
+			return this.then(function () {
+				return new Promise(function (resolve, reject) {
+					self._imap.getBoxes(function (err, boxes) {
+						if(err) {
+							reject(err);
+						} else {
+							resolve(boxes);
+						}
+					});
+				});
+			});
+		},
+		
 		ready: function (connection) {
-			console.log('Account connection ready', this.toJSON(), connection);
+			this.set('connected', true);
 		},
 		
 		error: function (err) {

@@ -10,15 +10,34 @@ define([
 		template: _.template(MailboxMenuItemTemplate),
 		
 		initialize: function (opts) {
+			this.model.on('change', this.render.bind(this));
+		},
+		
+		events: {
+			'click' : 'changeBox'
 		},
 		
 		render: function() {
-			this.$el.addClass('current');
+			if(this.model.get('open'))
+				this.$el.addClass('current');
+			else
+				this.$el.removeClass('current');
+			
 			this.$el.attr('href', '#'+encodeURIComponent(this.model.get('name')));
 			this.$el.html(this.template(this.model.toJSON()));
 			
 			return this;
 		},
+		
+		changeBox: function () {
+			if(this.model.get('open'))
+				return;
+			
+			_.each(this.model.collection.where({open:true}), function (item) {
+				item.set('open', false);
+			});
+			this.model.set('open', true);
+		}
 	});
 	
 	return MailboxMenuView;
