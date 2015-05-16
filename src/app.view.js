@@ -15,6 +15,8 @@ define([
 		regions: {
 			appbar : '#top',
 			main : '#primary'
+		},
+		
 		initialize: function () {
 			var self = this;
 			
