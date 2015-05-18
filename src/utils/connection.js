@@ -140,38 +140,46 @@ ConnectionManager.prototype.getMessages = function (boxName, limit, starting) {
 				}
 				
 				limit = typeof limit === 'undefined' ? 100 : limit;
-				starting = starting || ( limit ? Math.max(0, mailbox.messages.total - limit) : 1 );
+				starting = starting || ( limit ? Math.max(0, mailbox.messages.total - limit + 1) : 1 );
 				
 				var messages = [],
+					promises = [],
 					f = self._imap.seq.fetch(starting+':'+(limit ? Math.min(mailbox.messages.total, starting + limit) : '*'), { bodies: 'HEADER', struct: true });
 				f.on('message', function (msg, seqno) {
-					var num = '(Message #'+seqno+') ';
-					console.log(num + 'Start');
-					msg.on('body', function (stream, info) {
-						var mp = new MailParser();
-						
-						mp.on('end', function (mail) {
-							messages[seqno] = mail
+					promises.push(new Promise(function (rslv, rej) {
+						var num = '(Message #'+seqno+') ',
+							attr;
+						msg.on('body', function (stream, info) {
+							var mp = new MailParser();
+							
+							mp.on('end', function (mail) {
+								messages[seqno] = mail;
+								messages[seqno].attributes = attr;
+								rslv();
+							});
+							
+							stream.pipe(mp);
 						});
 						
-						stream.pipe(mp);
-					});
-					// msg.once('attributes', function (attrs) {
-						// console.log(num + 'ATTRIBUTES', attrs);
-					// });
-					// msg.once('end', function () {
-						// console.log(num + 'Message Finished;');
-					// })
+						msg.once('attributes', function (attrs) {
+							attr = attrs;
+						});
+						msg.once('end', function () {
+							if(messages[seqno]) messages[seqno].attributes = attr;
+						});
+						// 10 second timeout in case stream is very slow
+						setTimeout(rej.bind(this), 10000);
+					}));
 				});
 				f.once('error', function(err) {
 					reject('Fetch error: ' + err);
 				});
 				f.once('end', function() {
-					console.log('Done fetching all messages!');
 					self.disconnect();
-					resolve(messages);
+					Promise.all(promises).then(function () {
+						resolve(messages);
+					});
 				});
-				console.log('Got messages from '+boxName, mailbox);
 			});
 		});
 	});
