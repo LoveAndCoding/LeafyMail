@@ -14,6 +14,7 @@ define([
 					resizable: false,
 					frame: false,
 					show: false,
+					show_in_taskbar: false,
 					focus: true,
 					transparent: true,
 					icon: 'icon.png'
