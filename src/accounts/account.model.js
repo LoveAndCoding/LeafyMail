@@ -1,9 +1,4 @@
-var IMAP = require('imap'),
-	IMAP_DEFAULTS = {
-		tlsOptions: {
-			rejectUnauthorized: false
-		}
-	};
+var ConnectionManager = require('./src/utils/connection.js');
 
 define([
 	'underscore',
@@ -42,24 +37,36 @@ define([
 				opts.user = opts.user.join('@');
 			}
 			
-			opts.connected = false;
-			this.connect(opts);
-			
 			// Don't store the password
 			delete opts.password;
+			
+			opts.connected = false;
+			// this.connect(pass);
 			
 			return Backbone.Model.apply(this, arguments);
 		},
 		
-		destroy: function () {
-			this.disconnect();
+		initialize: function () {
+			this.cm = new ConnectionManager(this.toJSON());
+			this.cm.on('connected', (function () {
+				this.set('connected', true);
+			}).bind(this));
+			this.cm.on('disconnected', (function () {
+				this.set('connected', false);
+			}).bind(this));
+			
+			this.connect();
 		},
 		
-		getUserPassword: function (options) {
+		destroy: function () {
+			this.cm.disconnect();
+		},
+		
+		getUserPassword: function () {
 			return this.radio.reqres.request('modal:new', {
 				template: PasswordPromptTemplate,
 				view: new PasswordPromptView,
-				model: options,
+				model: this.toJSON(),
 				window: {
 					width: 300,
 					height: 150
@@ -67,29 +74,18 @@ define([
 			});
 		},
 		
-		connect: function (opts) {
-			var connOpts = _.clone(opts),
-				self = this,
-				passprom;
-			_.extend(connOpts, IMAP_DEFAULTS);
+		connect: function (password) {
+			var passprom;
 			
-			if(connOpts.password) {
-				passprom = Promise.resolve(connOpts.password);
+			if(password) {
+				passprom = Promise.resolve(password);
 			} else {
-				passprom = this.getUserPassword(connOpts);
+				passprom = this.getUserPassword();
 			}
 			
-			this.connection = passprom.then(function (password) {
-				connOpts.password = password;
-				return new Promise(function (resolve, reject) {
-					self._imap = new IMAP(connOpts);
-					
-					self._imap.on('error', reject.bind(this));
-					self._imap.on('ready', resolve.bind(this, self._imap));
-					
-					self._imap.connect();
-				});
-			});
+			this.connection = passprom.then((function (password) {
+				return this.cm.connect(password);
+			}).bind(this));
 			
 			this.connection.then(this.ready.bind(this), this.error.bind(this));
 			
@@ -97,9 +93,7 @@ define([
 		},
 		
 		disconnect: function () {
-			if(this._imap && this._imap.state !== 'disconnected') {
-				this._imap.end();
-			}
+			this.cm.disconnect();
 		},
 		
 		then: function () {
@@ -107,22 +101,10 @@ define([
 		},
 		
 		getBoxes: function () {
-			var self = this;
-			return this.then(function () {
-				return new Promise(function (resolve, reject) {
-					self._imap.getBoxes(function (err, boxes) {
-						if(err) {
-							reject(err);
-						} else {
-							resolve(boxes);
-						}
-					});
-				});
-			});
+			return this.cm.getBoxes();
 		},
 		
 		ready: function (connection) {
-			this.set('connected', true);
 		},
 		
 		error: function (err) {
