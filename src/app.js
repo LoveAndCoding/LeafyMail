@@ -36,7 +36,8 @@ requirejs.config({
 		backbone: '../node_modules/backbone/backbone',
 		backboneLocalstorage: '../node_modules/backbone.localstorage/backbone.localStorage',
 		marionette: '../node_modules/backbone.marionette/lib/backbone.marionette',
-		text: '../node_modules/requirejs-text/text'
+		text: '../node_modules/requirejs-text/text',
+		controller: 'utils/Controller'
 	}
 });
 
