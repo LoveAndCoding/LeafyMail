@@ -47,8 +47,9 @@ requirejs([
 	'jquery',
 	'marionette',
 	'app.model',
-	'app.view'
-], function ($, Marionette, AppModel, AppView) {
+	'app.view',
+	'app.controller'
+], function ($, Marionette, AppModel, AppView, AppController) {
 		
 	/** Overriding default HTML attachment for regions because it is silly **/
 	Marionette.Region.prototype.__attachHtml = Marionette.Region.prototype.attachHtml;
@@ -67,6 +68,10 @@ requirejs([
 	app.rootModel = new AppModel();
 	app.rootView = new AppView({
 		model : app.rootModel
+	});
+	app.controller = new AppController({
+		model: app.rootModel,
+		view: app.rootView
 	});
 	
 	app.rootView.setDeveloperMode();
