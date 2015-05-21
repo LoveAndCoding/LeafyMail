@@ -35,11 +35,11 @@ define([
 			if(!this.radio) return;
 			
 			_.each(this.events, (function (cb, eventName) {
-				this.radio.vent.on(eventName, cb, this);
+				this.radio.vent.on(eventName, typeof cb === 'string' ? this[cb] : cb, this);
 			}).bind(this));
 			
 			_.each(this.handlers, (function (handler, handleName) {
-				this.radio.reqres.setHandler(handleName, handler, this);
+				this.radio.reqres.setHandler(handleName, typeof handler === 'string' ? this[handler] : handler, this);
 			}).bind(this));
 		},
 		
