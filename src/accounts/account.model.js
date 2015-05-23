@@ -104,6 +104,13 @@ define([
 			return this.cm.getBoxes();
 		},
 		
+		getMessages: function (box) {
+			if(typeof box === 'object')
+				box = box.name;
+			
+			return this.cm.getMessages('Inbox');
+		},
+		
 		ready: function (connection) {
 		},
 		

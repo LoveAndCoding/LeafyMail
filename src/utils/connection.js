@@ -155,6 +155,7 @@ ConnectionManager.prototype.getMessages = function (boxName, limit, starting) {
 							mp.on('end', function (mail) {
 								messages[seqno] = mail;
 								messages[seqno].attributes = attr;
+								messages[seqno].seqNo = seqno;
 								rslv();
 							});
 							
