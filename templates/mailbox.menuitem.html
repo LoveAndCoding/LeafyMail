@@ -1,1 +1,1 @@
-<i class="fa <%= iconClass %>"></i><span class="label"><%= alias || name %></span>
+<i class="fa <%= iconClass %>"></i><span class="label"><%= alias || name %></span><% if (unread > 0) { %> <span class="unread"><%= unread %></span><% } %>
