@@ -422,6 +422,16 @@ body {
 }
 #email-list {
 	flex: 5;
+	display: flex;
+	
+	.message-list, .message-pane {
+		flex: 1;
+	}
+	
+	.message-list {
+		overflow: auto;
+		min-height: 0px;
+	}
 }
 
 @media (max-width: 980px) {
