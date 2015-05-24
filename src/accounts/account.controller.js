@@ -21,7 +21,7 @@ define([
 			var self = this;
 			account.getMessages('Inbox').then(function (messages) {
 				self.radio.vent.trigger('mailbox:update', {mailbox:'INBOX', account: account, messages: messages});
-			}, function (err) {
+			}).then(null, function (err) {
 				// TODO
 				console.log('Error getting inbox messages', err);
 			});
