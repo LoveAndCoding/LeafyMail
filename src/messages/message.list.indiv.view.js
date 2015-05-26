@@ -6,6 +6,7 @@ define([
 	var MessageListIndivView = Marionette.ItemView.extend({
 		
 		tagName: 'li',
+		className: 'message',
 		template: _.template(MessageListItemTempalte)
 		
 	});

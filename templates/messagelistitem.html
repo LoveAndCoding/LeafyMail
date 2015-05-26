@@ -1,1 +1,26 @@
-<%= subject %>
+<span class="<%= read ? "read" : "unread" %>">
+	<span class="subject"><%= subject %></span>
+	<span class="from"><%= from[0].name || from[0].address %></span>
+	<span class="date"><% if(date) {
+		var now = new Date();
+		if(date.getFullYear() === now.getFullYear()) {
+			if(date.getDate() === now.getDate() && date.getMonth() == now.getMonth()) {
+				// Mail from today
+				var timeString = date.getMinutes();
+				if(timeString < 10)
+					timeString = "0" + timeString;
+				if(date.getHours() > 12)
+					timeString = (date.getHours() - 12) + ":" + timeString + " PM";
+				else
+					timeString = date.getHours() + ":" + timeString + " AM";
+				%><%= timeString %><%
+			} else {
+				%><%= (date.getMonth() + 1) + "/" + date.getDate() %><%
+			}
+		} else {
+			%><%= date.toLocaleDateString() %><%
+		}
+	} else {
+		%>""<%
+	} %></span>
+</span>

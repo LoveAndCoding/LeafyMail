@@ -431,6 +431,21 @@ body {
 	.message-list {
 		overflow: auto;
 		min-height: 0px;
+		
+		.message {
+			padding: 8px;
+			border-bottom: 1px solid darken(@light-bg, 10%);
+			color: @light-bg-font-faded;
+			
+			.unread {
+				font-weight: 600;
+				color: @light-bg-font;
+			}
+			.subject {
+				display: block;
+				font-size: 18px;
+			}
+		}
 	}
 }
 
