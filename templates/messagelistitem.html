@@ -1,26 +1,29 @@
-<span class="<%= read ? "read" : "unread" %>">
-	<span class="subject"><%= subject %></span>
+<span class="message-content">
+	<span class="subject <%= read ? "read" : "unread" %>"><%= subject %></span>
 	<span class="from"><%= from[0].name || from[0].address %></span>
+</span>
+<span class="message-controls">
 	<span class="date"><% if(date) {
-		var now = new Date();
-		if(date.getFullYear() === now.getFullYear()) {
-			if(date.getDate() === now.getDate() && date.getMonth() == now.getMonth()) {
-				// Mail from today
-				var timeString = date.getMinutes();
-				if(timeString < 10)
-					timeString = "0" + timeString;
-				if(date.getHours() > 12)
-					timeString = (date.getHours() - 12) + ":" + timeString + " PM";
-				else
-					timeString = date.getHours() + ":" + timeString + " AM";
-				%><%= timeString %><%
-			} else {
-				%><%= (date.getMonth() + 1) + "/" + date.getDate() %><%
-			}
+	var now = new Date();
+	if(date.getFullYear() === now.getFullYear()) {
+		if(date.getDate() === now.getDate() && date.getMonth() == now.getMonth()) {
+			// Mail from today
+			var timeString = date.getMinutes();
+			if(timeString < 10)
+				timeString = "0" + timeString;
+			if(date.getHours() > 12)
+				timeString = (date.getHours() - 12) + ":" + timeString + " PM";
+			else
+				timeString = date.getHours() + ":" + timeString + " AM";
+			%><%= timeString %><%
 		} else {
-			%><%= date.toLocaleDateString() %><%
+			%><%= (date.getMonth() + 1) + "/" + date.getDate() %><%
 		}
 	} else {
-		%>""<%
-	} %></span>
+		%><%= date.toLocaleDateString() %><%
+	}
+} else {
+	%>""<%
+} %></span>
+	<i class="favorite fa fa-star-o"></i>
 </span>
