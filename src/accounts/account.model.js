@@ -108,7 +108,7 @@ define([
 			if(typeof box === 'object')
 				box = box.name;
 			
-			return this.cm.getMessages('Inbox');
+			return this.cm.getMessages(box);
 		},
 		
 		ready: function (connection) {
