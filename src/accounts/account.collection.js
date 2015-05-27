@@ -21,8 +21,6 @@ define([
 				var added = self.create(options, {parse:true});
 				return added;
 			});
-			
-			// this.on('change', this.sync.bind(this));
 		}
 		
 	});
