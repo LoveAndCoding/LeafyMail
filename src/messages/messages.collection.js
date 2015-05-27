@@ -10,6 +10,10 @@ define([
 		
 		initialize: function (messages, opts) {
 			this.localStorage = new Store('Mailbox.Messages'+opts.box.get('name'));
+		},
+		
+		comparator: function (item) {
+			return -1 * item.get('seqNo');
 		}
 		
 	});

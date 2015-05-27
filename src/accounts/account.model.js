@@ -55,6 +55,8 @@ define([
 				this.set('connected', false);
 			}).bind(this));
 			
+			this.cm.on('mail', this._recieveMessage.bind(this));
+			
 			$(window).on('unload', this.disconnect.bind(this, true));
 			
 			this.connect();
@@ -111,6 +113,10 @@ define([
 				box = box.name;
 			
 			return this.cm.getMessages(box);
+		},
+		
+		_recieveMessage: function (box, messages) {
+			this.radio.vent.trigger('mailbox:update', {mailbox: box, account: this, messages: messages});
 		},
 		
 		ready: function (connection) {

@@ -19,8 +19,7 @@ define([
 			if(!mailboxes.length) {
 				// Default mailboxes
 				mailboxes.create({
-					alias: 'Inbox',
-					name: 'INBOX',
+					name: 'Inbox',
 					iconClass: 'fa-envelope-o',
 					open: true
 				});

@@ -15,6 +15,9 @@ function ConnectionManager (connectionOptions) {
 	EventEmitter.call(this);
 	
 	this.__connected = false;
+	this.__changingBoxes = false;
+	this.__currentBox;
+	this.__currentMailboxObj;
 	this.__connectionOptions = _.extend(_.clone(IMAP_DEFAULTS), connectionOptions);
 	this.__queue = [];
 }
@@ -42,6 +45,8 @@ ConnectionManager.prototype.connect = function (password) {
 		this._executeQueue();
 		
 		this.emit('connected', opts);
+		
+		this._imap.on('mail', this._newMessage.bind(this));
 		
 		this._imap.on('close', (function (hadError) {
 			this.__connected = false;
@@ -73,6 +78,10 @@ ConnectionManager.prototype.disconnect = function (force) {
 
 ConnectionManager.prototype.isConnected = function () {
 	return this.__connected;
+};
+
+ConnectionManager.prototype.getCurrentBox = function () {
+	return this.__connected ? this.__currentBox : undefined;
 };
 
 ConnectionManager.prototype.getBoxes = function () {
@@ -132,13 +141,10 @@ ConnectionManager.prototype._clearQueue = function () {
 
 ConnectionManager.prototype.getMessages = function (boxName, limit, starting) {
 	var self = this;
+	this.__changingBoxes = true;
 	return this._queueCommand(function () {
 		return new Promise(function(resolve, reject) {
-			self._imap.openBox(boxName, function (err, mailbox) {
-				if(err) {
-					return reject('Unable to open Inbox');
-				}
-				
+			var procFn = function (mailbox) {
 				limit = typeof limit === 'undefined' ? 100 : limit;
 				starting = starting || ( limit ? Math.max(0, mailbox.messages.total - limit + 1) : 1 );
 				
@@ -180,9 +186,35 @@ ConnectionManager.prototype.getMessages = function (boxName, limit, starting) {
 						resolve(messages);
 					});
 				});
-			});
+			};
+			
+			if(self.__currentBox != boxName) {
+				self._imap.openBox(boxName, function (err, mailbox) {
+					if(err) {
+						return reject('Unable to open Inbox');
+					}
+					
+					self.__changingBoxes = false;
+					self.__currentBox = boxName;
+					self.__currentMailboxObj = mailbox;
+					procFn(mailbox);
+				});
+			} else {
+				procFn(self.__currentMailboxObj);
+			}
 		});
 	});
+};
+
+ConnectionManager.prototype._newMessage = function (numNewMessages) {
+	this.emit('getting mail', numNewMessages);
+	if(!this.__changingBoxes) {
+		this.getMessages(this.__currentBox, numNewMessages).then((function (messages) {
+			this.emit(/* you've got */ 'mail', this.__currentBox, messages);
+		}).bind(this)).then(null, (function (err) {
+			this.emit('error', err);
+		}).bind(this));
+	}
 };
 
 // ConnectionManager.prototype.
