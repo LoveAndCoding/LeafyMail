@@ -176,7 +176,6 @@ ConnectionManager.prototype.getMessages = function (boxName, limit, starting) {
 					reject('Fetch error: ' + err);
 				});
 				f.once('end', function() {
-					self.disconnect();
 					Promise.all(promises).then(function () {
 						resolve(messages);
 					});

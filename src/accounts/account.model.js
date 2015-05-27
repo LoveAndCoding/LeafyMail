@@ -55,11 +55,13 @@ define([
 				this.set('connected', false);
 			}).bind(this));
 			
+			$(window).on('unload', this.disconnect.bind(this, true));
+			
 			this.connect();
 		},
 		
-		destroy: function () {
-			this.cm.disconnect();
+		destroy: function (forced) {
+			this.cm.disconnect(forced);
 		},
 		
 		getUserPassword: function () {
