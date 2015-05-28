@@ -1,14 +1,30 @@
 {
-	"name": "leafymail",
-	"version": "0.0.1",
-	"main": "index.html",
-	"window" : {
-		"title": "LeafyMail",
-		"icon": "icon.png",
-		"frame": false,
-		"show": true,
-		"toolbar":false,
-		"width":800,
-		"height":600
-	}
+  "name": "leafymail",
+  "version": "0.0.1",
+  "main": "index.html",
+  "window": {
+    "title": "LeafyMail",
+    "icon": "icon.png",
+    "frame": false,
+    "show": true,
+    "toolbar": false,
+    "width": 800,
+    "height": 600
+  },
+  "devDependencies": {
+    "node-webkit-builder": "^1.0.11"
+  },
+  "dependencies": {
+    "backbone": "^1.2.0",
+    "backbone.localstorage": "^1.1.16",
+    "backbone.marionette": "^2.4.1",
+    "imap": "^0.8.14",
+    "jquery": "^2.1.4",
+    "less": "^2.5.1",
+    "mailparser": "^0.5.1",
+    "promise": "^7.0.1",
+    "requirejs": "^2.1.17",
+    "requirejs-text": "^2.0.12",
+    "underscore": "^1.8.3"
+  }
 }
