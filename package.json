@@ -11,6 +11,9 @@
     "width": 800,
     "height": 600
   },
+  "scripts":{
+    "build" : "node ./build.js"
+  },
   "devDependencies": {
     "node-webkit-builder": "^1.0.11"
   },
